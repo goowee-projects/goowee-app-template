@@ -51,7 +51,7 @@ class BootStrap {
 
             def o1 = orderService.create(failOnError: true, supplier: myCompany, client: showerLand, ref: '0001', subject: 'The ROSSI house')
             def o2 = orderService.create(failOnError: true, supplier: myCompany, client: showerWorld, ref: '0002', subject: 'The BIANCHI house')
-            def o3 = orderService.create(failOnError: true, supplier: myCompany, client: showerTower, ref: '0003', subject: 'The SARTORI house')
+            def o3 = orderService.create(failOnError: true, supplier: myCompany, client: showerTower, ref: '0003', subject: 'The VERDI house')
 
             orderItemService.create(failOnError: true, order: o1, product: parmenide, unitPrice: new Money(100), quantity: new Quantity(12))
             orderItemService.create(failOnError: true, order: o1, product: aristotele, unitPrice: new Money(200), quantity: new Quantity(3))
