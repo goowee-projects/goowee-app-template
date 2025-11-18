@@ -89,6 +89,10 @@ class BootStrap {
                     controller: 'product',
                     icon: 'fa-heart',
             )
+
+            applicationService.registerCredits('Project Management', 'Gianluca Sartori')
+            applicationService.registerCredits('Software Development', 'Francesco Piceghello', 'Gianluca Sartori')
+            applicationService.registerCredits('Testing', 'Francesco Piceghello', 'Gianluca Sartori')
         }
 
         applicationService.onTenantInit {
