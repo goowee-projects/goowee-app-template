@@ -14,7 +14,7 @@ import groovy.util.logging.Slf4j
 import jakarta.annotation.PostConstruct
 
 @Slf4j
-@Secured(['ROLE_USER', /* other ROLE_... */])
+@Secured(['ROLE_USER'])
 class CompanyController implements ElementsController {
 
     CompanyService companyService
@@ -76,7 +76,6 @@ class CompanyController implements ElementsController {
             addField(
                     class: TextField,
                     id: 'name',
-                    cols: 12,
             )
             addField(
                     class: Checkbox,
