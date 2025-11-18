@@ -18,7 +18,7 @@ import groovy.util.logging.Slf4j
 import jakarta.annotation.PostConstruct
 
 @Slf4j
-@Secured(['ROLE_USER', /* other ROLE_... */])
+@Secured(['ROLE_USER'])
 class OrderController implements ElementsController {
 
     CompanyService companyService
@@ -45,7 +45,6 @@ class OrderController implements ElementsController {
                         class: TextField,
                         id: 'find',
                         label: TextDefault.FIND,
-                        cols: 12,
                 )
             }
             sortable = [
@@ -120,7 +119,6 @@ class OrderController implements ElementsController {
                         id: 'items',
                         icon: 'fa-cart-shopping',
                         squeeze: true,
-                        cols: 12,
                 )
                 addField(
                         class: Select,

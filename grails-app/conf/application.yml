@@ -1,10 +1,4 @@
-info:
-  app:
-    name: '@info.app.name@'
-    version: '@info.app.version@'
-    grailsVersion: '@info.app.grailsVersion@'
-
-
+# See: https://github.com/grails/grails-core/issues/12874
 info.app.name: gooweeapp
 
 # CREATE DEV CERTIFICATE
@@ -81,6 +75,11 @@ grails:
     upload:
       maxFileSize: 20000000
       maxRequestSize: 20000000
+info:
+  app:
+    name: '@info.app.name@'
+    version: '@info.app.version@'
+    grailsVersion: '@info.app.grailsVersion@'
 
 ---
 grails:
