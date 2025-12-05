@@ -5,6 +5,7 @@ import goowee.audit.AuditService
 import goowee.exceptions.ArgsException
 import grails.gorm.DetachedCriteria
 import grails.gorm.multitenancy.CurrentTenant
+import grails.gorm.transactions.Transactional
 import groovy.util.logging.Slf4j
 
 import jakarta.annotation.PostConstruct
@@ -43,7 +44,7 @@ class OrderItemService {
     private Map getFetchAll() {
         // Add any relationship here (Eg. references to other DomainObjects or hasMany)
         return [
-                'relationshipName': 'join',
+                'relationshipName'   : 'join',
 
                 // hasMany relationships
                 'hasManyRelationship': 'join',
@@ -75,6 +76,7 @@ class OrderItemService {
         return query.count()
     }
 
+    @Transactional
     TOrderItem create(Map args = [:]) {
         if (args.failOnError == null) args.failOnError = false
 
@@ -94,6 +96,7 @@ class OrderItemService {
         return obj
     }
 
+    @Transactional
     TOrderItem update(Map args = [:]) {
         Serializable id = ArgsException.requireArgument(args, 'id')
         if (args.failOnError == null) args.failOnError = false
@@ -115,6 +118,7 @@ class OrderItemService {
         return obj
     }
 
+    @Transactional
     void delete(Serializable id) {
         TOrderItem obj = get(id)
         obj.delete(flush: true, failOnError: true)

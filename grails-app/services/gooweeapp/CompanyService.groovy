@@ -5,6 +5,7 @@ import goowee.audit.AuditService
 import goowee.exceptions.ArgsException
 import grails.gorm.DetachedCriteria
 import grails.gorm.multitenancy.CurrentTenant
+import grails.gorm.transactions.Transactional
 import groovy.util.logging.Slf4j
 
 import jakarta.annotation.PostConstruct
@@ -75,6 +76,7 @@ class CompanyService {
         return query.count()
     }
 
+    @Transactional
     TCompany create(Map args = [:]) {
         if (args.failOnError == null) args.failOnError = false
 
@@ -83,6 +85,7 @@ class CompanyService {
         return obj
     }
 
+    @Transactional
     TCompany update(Map args = [:]) {
         Serializable id = ArgsException.requireArgument(args, 'id')
         if (args.failOnError == null) args.failOnError = false
@@ -93,6 +96,7 @@ class CompanyService {
         return obj
     }
 
+    @Transactional
     void delete(Serializable id) {
         TCompany obj = get(id)
         obj.delete(flush: true, failOnError: true)

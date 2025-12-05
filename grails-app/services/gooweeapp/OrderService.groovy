@@ -5,6 +5,7 @@ import goowee.audit.AuditService
 import goowee.exceptions.ArgsException
 import grails.gorm.DetachedCriteria
 import grails.gorm.multitenancy.CurrentTenant
+import grails.gorm.transactions.Transactional
 import groovy.util.logging.Slf4j
 
 import jakarta.annotation.PostConstruct
@@ -29,10 +30,10 @@ class OrderService {
             String search = filterParams.find.replaceAll('\\*', '%')
             query = query.where {
                 true
-            || ref =~ "%${search}%"
-            || subject =~ "%${search}%"
-            || supplier.name =~ "%${search}%"
-            || client.name =~ "%${search}%"
+                        || ref =~ "%${search}%"
+                        || subject =~ "%${search}%"
+                        || supplier.name =~ "%${search}%"
+                        || client.name =~ "%${search}%"
             }
         }
 
@@ -44,7 +45,7 @@ class OrderService {
     private Map getFetchAll() {
         // Add any relationship here (Eg. references to other DomainObjects or hasMany)
         return [
-                'relationshipName': 'join',
+                'relationshipName'   : 'join',
 
                 // hasMany relationships
                 'hasManyRelationship': 'join',
@@ -76,6 +77,7 @@ class OrderService {
         return query.count()
     }
 
+    @Transactional
     TOrder create(Map args = [:]) {
         if (args.failOnError == null) args.failOnError = false
 
@@ -84,6 +86,7 @@ class OrderService {
         return obj
     }
 
+    @Transactional
     TOrder update(Map args = [:]) {
         Serializable id = ArgsException.requireArgument(args, 'id')
         if (args.failOnError == null) args.failOnError = false
@@ -94,6 +97,7 @@ class OrderService {
         return obj
     }
 
+    @Transactional
     void delete(Serializable id) {
         TOrder obj = get(id)
         obj.delete(flush: true, failOnError: true)

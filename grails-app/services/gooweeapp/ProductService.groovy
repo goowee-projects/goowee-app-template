@@ -5,6 +5,7 @@ import goowee.audit.AuditService
 import goowee.exceptions.ArgsException
 import grails.gorm.DetachedCriteria
 import grails.gorm.multitenancy.CurrentTenant
+import grails.gorm.transactions.Transactional
 import groovy.util.logging.Slf4j
 
 import jakarta.annotation.PostConstruct
@@ -73,6 +74,7 @@ class ProductService {
         return query.count()
     }
 
+    @Transactional
     TProduct create(Map args = [:]) {
         if (args.failOnError == null) args.failOnError = false
 
@@ -81,6 +83,7 @@ class ProductService {
         return obj
     }
 
+    @Transactional
     TProduct update(Map args = [:]) {
         Serializable id = ArgsException.requireArgument(args, 'id')
         if (args.failOnError == null) args.failOnError = false
@@ -91,6 +94,7 @@ class ProductService {
         return obj
     }
 
+    @Transactional
     void delete(Serializable id) {
         TProduct obj = get(id)
         obj.delete(flush: true, failOnError: true)
