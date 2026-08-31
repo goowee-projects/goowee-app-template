@@ -93,7 +93,8 @@ dependencies {
 
     // GOOWEE
     implementation "org.goowee:goowee-core:${gooweeVersion}"
-//    implementation "org.goowee:goowee-printing:${gooweeSolutionsVersion}"
+    // GOOWEE SOLUTIONS
+//    implementation "org.goowee:goowee-printing:${gooweeVersion}"
 }
 
 java {
