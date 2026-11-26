@@ -5,7 +5,7 @@
 With [Goowee](https://goowee.org) you can build Back-Office Web Applications with a single programming language: [Apache Groovy](https://groovy-lang.org).
 
 ## Getting started
-Make sure you have [Git](https://git-scm.com) and a [JDK](https://www.oracle.com/java/technologies/downloads/) installed. The minimum requirement is Java 17.
+Make sure you have [Git](https://git-scm.com) and a [JDK](https://www.oracle.com/java/technologies/downloads/) installed. The minimum requirement is Java 21.
 ```
 $ git clone https://github.com/goowee-projects/goowee-app-template
 $ cd goowee-app-template
@@ -41,22 +41,22 @@ Open your browser at [https://localhost:8080](https://localhost:8080) then:
 You can create a new application from this template project with an AI agent or manually.
 
 ### AI agent
-With the `JetBrains AI Assistant` plugin for `IntelliJ IDEA` + the `OpenAI Codex` plugin (or any other AI agent setup in your preferred IDE) execute the following prompts:
+With an AI agent execute the following prompts:
 
-1. `Rename the application and the corresponding packages to "myappname".`
-2. `Create a new CRUD main feature, with i18n, in package "myappname" for the entity “person” with columns: firstname, lastname, age, gender. Respect the naming conventions for GORM entities, services and controllers.`
+1. `Rename the application and the corresponding packages to "myapp".`
+2. `Create a Goowee app to manage a “person” with the following columns: firstname, lastname, age, gender.`
 
 ### Manually
 1. Find and replace the string `gooweeapp` across all project files with your chosen name
 2. Rename the `gooweeapp` package accordingly
-3. You can find feature implementation examples in the `template` package
+3. You can find an implementation example in the `template` package
 
 ## Create the executable `.jar`
 1. Run `./gradlew bootJar`
 2. The application `.jar` file will be generated under `/biuld/libs`
 3. Run the application with `java -jar gooweeapp-1.0-SNAPSHOT.jar`
 
-## Project cocumentation
+## Project documentation
 Documentation sources are under `/src/docs`.
 1. Write the content using [Asciidoc](https://asciidoctor.org/docs/asciidoc-syntax-quick-reference/)
 2. Generate the documentation with `./gradlew asciidoctor`
