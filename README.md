@@ -2,7 +2,7 @@
 
 # Goowee Application Template
 
-With [Goowee](https://goowee.org) you can build Back-Office Web Applications with a single programming language: [Apache Groovy](https://groovy-lang.org).
+With [Goowee](https://goowee.org) you can build Enterprise Applications with [Apache Groovy](https://groovy-lang.org).
 
 ## Getting started
 Make sure you have [Git](https://git-scm.com) and a [JDK](https://www.oracle.com/java/technologies/downloads/) installed. The minimum requirement is Java 21.
