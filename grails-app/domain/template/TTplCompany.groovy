@@ -15,4 +15,8 @@ class TTplCompany implements GormEntity, MultiTenant<TTplCompany> {
     Boolean isSupplier
     Boolean isClient
 
+    static constraints = {
+        name nullable: false, maxSize: 120
+    }
+
 }

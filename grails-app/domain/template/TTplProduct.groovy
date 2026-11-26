@@ -13,4 +13,9 @@ class TTplProduct implements GormEntity, MultiTenant<TTplProduct> {
     String ref
     String name
 
+    static constraints = {
+        ref nullable: false, maxSize: 120
+        name nullable: false, maxSize: 120
+    }
+
 }

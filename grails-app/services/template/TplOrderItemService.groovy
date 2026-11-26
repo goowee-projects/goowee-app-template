@@ -1,7 +1,7 @@
 package template
 
-import goowee.audit.AuditOperation
-import goowee.audit.AuditService
+import goowee.tenant.AuditOperation
+import goowee.tenant.AuditService
 import goowee.types.Money
 import grails.gorm.DetachedCriteria
 import grails.gorm.multitenancy.CurrentTenant
@@ -48,9 +48,7 @@ class TplOrderItemService {
 
     private Map getFetchAll() {
         // Add any relationship here (Eg. references to other DomainObjects or hasMany)
-        return [
-            'relationshipName'   : 'join',
-
+        return fetch + [
             // hasMany relationships
             'hasManyRelationship': 'join',
         ]
@@ -130,10 +128,11 @@ class TplOrderItemService {
     }
 
     @Transactional
-    @Requires({ id })
     void delete(Serializable id) {
         TTplOrderItem obj = get(id)
-        obj.delete(flush: true)
-        auditService.log(AuditOperation.DELETE, obj)
+        if (obj) {
+            obj.delete(flush: true)
+            auditService.log(AuditOperation.DELETE, obj)
+        }
     }
 }

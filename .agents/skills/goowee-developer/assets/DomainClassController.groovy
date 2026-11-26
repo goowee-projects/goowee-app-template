@@ -10,13 +10,12 @@ import goowee.elements.controls.TextField
 import goowee.elements.style.TextDefault
 import grails.plugin.springsecurity.annotation.Secured
 import groovy.util.logging.Slf4j
-import jakarta.annotation.PostConstruct
 
 @Slf4j
 @Secured(['ROLE_USER', /* other ROLE_... */])
-class CompanyController implements ElementsController {
+class DomainClassController implements ElementsController {
 
-    CompanyService companyService
+    DomainClassService domainClassService
 
     def handleException(Exception e) {
         // Display a popup message instead of the "Error" screen
@@ -48,8 +47,8 @@ class CompanyController implements ElementsController {
             }
         }
 
-        c.table.body = companyService.list(c.table.filterParams, c.table.fetchParams)
-        c.table.paginate = companyService.count(c.table.filterParams)
+        c.table.body = domainClassService.list(c.table.filterParams, c.table.fetchParams)
+        c.table.paginate = domainClassService.count(c.table.filterParams)
 
         display content: c
     }
@@ -98,7 +97,7 @@ class CompanyController implements ElementsController {
     }
 
     def onCreate() {
-        def obj = companyService.create(params)
+        def obj = domainClassService.create(params)
         if (obj.hasErrors()) {
             display errors: obj
             return
@@ -108,13 +107,13 @@ class CompanyController implements ElementsController {
     }
 
     def edit() {
-        def obj = companyService.get(params.id)
+        def obj = domainClassService.get(params.id)
         def c = buildForm(obj)
         display content: c, modal: true
     }
 
     def onEdit() {
-        def obj = companyService.update(params)
+        def obj = domainClassService.update(params)
         if (obj.hasErrors()) {
             display errors: obj
             return
@@ -125,7 +124,7 @@ class CompanyController implements ElementsController {
 
     def onDelete() {
         try {
-            companyService.delete(params.id)
+            domainClassService.delete(params.id)
             display action: 'index'
 
         } catch (e) {

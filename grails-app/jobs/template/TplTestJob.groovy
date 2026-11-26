@@ -1,6 +1,6 @@
 package template
 
-import goowee.tenants.TenantService
+import goowee.tenant.TenantService
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 import org.quartz.JobExecutionContext

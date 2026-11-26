@@ -1,6 +1,8 @@
 # Application
 
-`ApplicationService` is the main entry point for application setup. It is usually configured in `BootStrap.groovy`.
+`GooweeApplication` is the main entry point for application setup. It is usually configured in `BootStrap.groovy`.
+
+IMPORTANT: The `gooweeApplication.onInit()` method MUST be called after the `onInstall`, `onTenantInstall`, and `onDevInstall` closures; otherwise installation will not run.
 
 ## onInstall()
 
@@ -12,11 +14,11 @@ Runs only the first time the application starts.
 class BootStrap {
 
     ServletContext servletContext
-    ApplicationService applicationService
+    GooweeApplication gooweeApplication
 
     def init = {
 
-        applicationService.onInstall {
+        gooweeApplication.onInstall {
             // ...
         }
 
@@ -34,11 +36,11 @@ Installs tenant-specific data. This closure runs once for the `DEFAULT` tenant d
 class BootStrap {
 
     ServletContext servletContext
-    ApplicationService applicationService
+    GooweeApplication gooweeApplication
 
     def init = {
 
-        applicationService.onTenantInstall { String tenantId -> //<1>
+        gooweeApplication.onTenantInstall { String tenantId -> //<1>
             // ...
         }
 
@@ -60,11 +62,11 @@ This closure is not executed when the application runs as a JAR, as a WAR, or in
 class BootStrap {
 
     ServletContext servletContext
-    ApplicationService applicationService
+    GooweeApplication gooweeApplication
 
     def init = {
 
-        applicationService.onDevInstall { String tenantId ->
+        gooweeApplication.onDevInstall { String tenantId ->
             // ...
         }
 
@@ -84,23 +86,23 @@ Each closure runs only once at startup. Execution order is determined alphabetic
 class BootStrap {
 
     ServletContext servletContext
-    ApplicationService applicationService
+    GooweeApplication gooweeApplication
 
     def init = { // <1>
 
-        applicationService.onUpdate('2021-01-03') { String tenantId ->
+        gooweeApplication.onUpdate('2021-01-03') { String tenantId ->
             println "${tenantId}: UPDATE N.2"
         }
 
-        applicationService.onUpdate('2021-01-02') { String tenantId ->
+        gooweeApplication.onUpdate('2021-01-02') { String tenantId ->
             println "${tenantId}: UPDATE N.1"
         }
 
-        applicationService.onUpdate('2021-01-05') { String tenantId ->
+        gooweeApplication.onUpdate('2021-01-05') { String tenantId ->
             println "${tenantId}: UPDATE N.4"
         }
 
-        applicationService.onUpdate('2021-01-04') { String tenantId ->
+        gooweeApplication.onUpdate('2021-01-04') { String tenantId ->
             println "${tenantId}: UPDATE N.3"
         }
     }
@@ -121,11 +123,11 @@ IMPORTANT: Define the `onInit` closure after `onInstall`, `onTenantInstall`, and
 class BootStrap {
 
     ServletContext servletContext
-    ApplicationService applicationService // <1>
+    GooweeApplication gooweeApplication // <1>
 
     def init = {
 
-        applicationService.onInit { // <2>
+        gooweeApplication.onInit { // <2>
             // ...
         }
 
@@ -133,7 +135,7 @@ class BootStrap {
 }
 ```
 
-1. Injects an instance of `ApplicationService`.
+1. Injects an instance of `GooweeApplication`.
 2. The `onInit { ... }` closure runs every time the application starts.
 
 ## afterLogin()
@@ -200,12 +202,12 @@ Set the `failOnError` argument to `true` to prevent the application from running
 class BootStrap {
 
     ServletContext servletContext
-    ApplicationService applicationService
+    GooweeApplication gooweeApplication
     CompanyService companyService
 
     def init = {
 
-        applicationService.onDevInstall { String tenantId ->
+        gooweeApplication.onDevInstall { String tenantId ->
             companyService.create(
                     failOnError: true,
                     name: 'Northwind Trading',
@@ -251,12 +253,12 @@ You can make the application available under a specific URL path, for example `h
 class BootStrap {
 
     ServletContext servletContext
-    ApplicationService applicationService
+    GooweeApplication gooweeApplication
     TenantPropertyService tenantPropertyService
 
     def init = {
 
-        applicationService.onTenantInstall { String tenantId ->
+        gooweeApplication.onTenantInstall { String tenantId ->
             tenantPropertyService.setString('SHELL_URL_MAPPING', '/admin')
             tenantPropertyService.setString('LOGIN_LANDING_URL', '/') // <1>
             tenantPropertyService.setString('LOGOUT_LANDING_URL', '/') // <2>

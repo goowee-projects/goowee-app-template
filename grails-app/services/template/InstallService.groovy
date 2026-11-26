@@ -1,18 +1,14 @@
-package gooweeapp
+package template
 
-import goowee.properties.TenantPropertyService
+import goowee.tenant.TenantPropertyService
 import goowee.security.SecurityService
-import goowee.tenants.TenantService
+import goowee.tenant.TenantService
 import goowee.types.Money
 import goowee.types.Quantity
 import goowee.types.QuantityService
 import goowee.types.QuantityUnit
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
-import template.TplCompanyService
-import template.TplOrderItemService
-import template.TplOrderService
-import template.TplProductService
 
 @Slf4j
 @CompileStatic

@@ -1,7 +1,8 @@
 package template
 
-import goowee.audit.AuditOperation
-import goowee.audit.AuditService
+import goowee.security.SecurityService
+import goowee.tenant.AuditOperation
+import goowee.tenant.AuditService
 import grails.gorm.DetachedCriteria
 import grails.gorm.multitenancy.CurrentTenant
 import grails.gorm.transactions.Transactional
@@ -14,7 +15,7 @@ import jakarta.annotation.PostConstruct
 @Slf4j
 @CurrentTenant
 @CompileStatic
-class CompanyService {
+class DomainClassService {
 
     SecurityService securityService
     AuditService auditService
@@ -25,8 +26,8 @@ class CompanyService {
     }
 
     @CompileDynamic
-    private DetachedCriteria<TCompany> buildQuery(Map filterParams, Boolean readOnly = false) {
-        def query = TCompany.where {}
+    private DetachedCriteria<TDomainClass> buildQuery(Map filterParams, Boolean readOnly = false) {
+        def query = TDomainClass.where {}
 
         if (filterParams.containsKey('id')) query = query.where { id == filterParams.id }
 
@@ -62,15 +63,15 @@ class CompanyService {
         ]
     }
 
-    TCompany get(Serializable id) {
+    TDomainClass get(Serializable id) {
         return find(id: id)
     }
 
-    TCompany find(Map filterParams) {
+    TDomainClass find(Map filterParams) {
         return buildQuery(filterParams).get(fetch: fetchAll)
     }
 
-    List<TCompany> list(Map filterParams = [:], Map fetchParams = [:]) {
+    List<TDomainClass> list(Map filterParams = [:], Map fetchParams = [:]) {
         if (!fetchParams.sort) fetchParams.sort = [dateCreated: 'asc']
         if (!fetchParams.fetch) fetchParams.fetch = fetch
 
@@ -84,11 +85,11 @@ class CompanyService {
     }
 
     @Transactional
-    TCompany create(Map args = [:]) {
+    TDomainClass create(Map args = [:]) {
         if (args.usernameCreated == null) args.usernameCreated = securityService.currentUsername
         if (args.failOnError == null) args.failOnError = false
 
-        TCompany obj = new TCompany(args)
+        TDomainClass obj = new TDomainClass(args)
         obj.save(flush: true, failOnError: args.failOnError)
         return obj
     }
@@ -96,11 +97,11 @@ class CompanyService {
     @Transactional
     @CompileDynamic
     @Requires({ args.id })
-    TCompany update(Map args = [:]) {
+    TDomainClass update(Map args = [:]) {
         if (args.usernameUpdated == null) args.usernameUpdated = securityService.currentUsername
         if (args.failOnError == null) args.failOnError = false
 
-        TCompany obj = get(args.id)
+        TDomainClass obj = get(args.id)
         obj.properties = args
         obj.save(flush: true, failOnError: args.failOnError)
         return obj
@@ -109,8 +110,10 @@ class CompanyService {
     @Transactional
     @Requires({ id })
     void delete(Serializable id) {
-        TCompany obj = get(id)
-        obj.delete(flush: true)
-        auditService.log(AuditOperation.DELETE, obj)
+        TDomainClass obj = get(id)
+        if (obj) {
+            obj.delete(flush: true)
+            auditService.log(AuditOperation.DELETE, obj)
+        }
     }
 }

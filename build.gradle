@@ -4,7 +4,9 @@ import com.bmuschko.gradle.docker.tasks.image.Dockerfile
 buildscript {
     repositories {
         mavenCentral()
-        maven { url = "https://repo.grails.org/grails/restricted" }
+        maven {
+            url = 'https://repo.grails.org/grails/restricted'
+        }
     }
     dependencies { // Not Published to Gradle Plugin Portal
         classpath "cloud.wondrify:asset-pipeline-gradle"
@@ -54,6 +56,8 @@ configurations.configureEach {
 
 dependencies {
     profile "org.apache.grails.profiles:web"
+    developmentOnly "org.springframework.boot:spring-boot-devtools"
+    // Spring Boot DevTools may cause performance slowdowns or compatibility issues on larger applications
     testAndDevelopmentOnly "org.webjars.npm:bootstrap"
     testAndDevelopmentOnly "org.webjars.npm:bootstrap-icons"
     testAndDevelopmentOnly "org.webjars.npm:jquery"
@@ -64,11 +68,11 @@ dependencies {
     implementation "org.apache.grails:grails-events"
     implementation "org.apache.grails:grails-gsp"
     implementation "org.apache.grails:grails-interceptors"
-    implementation "org.apache.grails:grails-layout"
     implementation "org.apache.grails:grails-logging"
     implementation "org.apache.grails:grails-rest-transforms"
     implementation "org.apache.grails:grails-scaffolding"
     implementation "org.apache.grails:grails-services"
+    implementation "org.apache.grails:grails-sitemesh3"
     implementation "org.apache.grails:grails-url-mappings"
     implementation "org.apache.grails:grails-web-boot"
     implementation "org.springframework.boot:spring-boot-autoconfigure"
@@ -77,35 +81,21 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-logging"
     implementation "org.springframework.boot:spring-boot-starter-tomcat"
     implementation "org.springframework.boot:spring-boot-starter-validation"
-    console "org.apache.grails:grails-console"
+    implementation "org.springframework.boot:spring-boot-tomcat"
     runtimeOnly "cloud.wondrify:asset-pipeline-grails"
     runtimeOnly "com.h2database:h2"
     runtimeOnly "com.zaxxer:HikariCP"
-    runtimeOnly "org.fusesource.jansi:jansi"
     integrationTestImplementation testFixtures("org.apache.grails:grails-geb")
     testImplementation "org.apache.grails:grails-testing-support-datamapping"
     testImplementation "org.apache.grails:grails-testing-support-web"
+    testImplementation "org.mockito:mockito-core"
     testImplementation "org.spockframework:spock-core"
-
-    // Comment this if you need to create tenants at runtime in dev environment
-    // Spring Boot DevTools may cause performance slowdowns or compatibility issues on larger applications
-    developmentOnly "org.springframework.boot:spring-boot-devtools"
 
     // GOOWEE
     implementation "org.goowee:goowee-core:${gooweeVersion}"
-    // GOOWEE SOLUTIONS
-//    implementation "org.goowee:goowee-printing:${gooweeVersion}"
 }
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(javaVersion)
-    }
-}
-
-tasks.withType(GroovyCompile).configureEach {
-    groovyOptions.optimizationOptions.indy = false
-}
+compileJava.options.release = 21
 
 tasks.withType(Test).configureEach {
     useJUnitPlatform()
@@ -113,23 +103,17 @@ tasks.withType(Test).configureEach {
 
 bootRun {
     jvmArgs(
-            "-XX:+UseG1GC",
-            "-XX:+UseStringDeduplication",
-            "-XX:InitialRAMPercentage=25",
-            "-XX:MaxRAMPercentage=70",
-            "-XX:InitiatingHeapOccupancyPercent=40",
+        "-XX:+UseG1GC",
+        "-XX:+UseStringDeduplication",
+        "-XX:InitialRAMPercentage=25",
+        "-XX:MaxRAMPercentage=70",
+        "-XX:InitiatingHeapOccupancyPercent=40",
     )
 }
 
 assets {
-    minifyCss = true
-    minifyJs = true
-    minifyOptions = [
-            //SIMPLE (default) or ADVANCED or WHITESPACE_ONLY
-            optimizationLevel: "SIMPLE",
-    ]
     excludes = [
-            "webjars/**",
+        "webjars/**",
     ]
 }
 
@@ -146,13 +130,13 @@ compileGroovy.finalizedBy(asciidoctor)
 asciidoctor {
     baseDirFollowsSourceDir()
     attributes = [
-            "application-name"  : project.name,
-            "revnumber"         : project.version,
-            "grails-version"    : grailsVersion,
-            "source-highlighter": "coderay",
-            "icons"             : "font",
-            "toc"               : "left",
-            "toclevels"         : 3,
+        "application-name"  : project.name,
+        "revnumber"         : project.version,
+        "grails-version"    : grailsVersion,
+        "source-highlighter": "coderay",
+        "icons"             : "font",
+        "toc"               : "left",
+        "toclevels"         : 3,
     ]
     outputOptions {
         backends = ["html5"] // or ["html5", "pdf"]
@@ -182,7 +166,7 @@ tasks.register('prepareDocker', Copy) {
     from("src/main/docker")
 
     from(
-            tasks.named('bootJar').flatMap { it.archiveFile }
+        tasks.named('bootJar').flatMap { it.archiveFile }
     )
 
     into(dockerBuildDir)

@@ -4,6 +4,10 @@ A _Goowee_ application exposes a finite set of features to its users. Features a
 
 After registration, features are implemented by their controllers.
 
+Features are internationalized with the following keys:
+ - Name: `shell.controllerName.actionName` (eg: `shell.book.index`)
+ - Help message displayed in the favourite box `shell.controllerName.actionName.help` (eg: `shell.book.index.help`)
+
 ## registerFeature()
 
 Registers a feature.
@@ -14,11 +18,11 @@ Registers a feature.
 class BootStrap {
 
     ServletContext servletContext
-    ApplicationService applicationService
+    GooweeApplication gooweeApplication
 
     def init = {
 
-        applicationService.onInit {
+        gooweeApplication.onInit {
             registerFeature(
                     controller: 'book', // <1>
                     action: 'index', // <2>
@@ -57,7 +61,7 @@ class BootStrap {
 - `<6>` Assigns the feature to its parent.
 
 > **IMPORTANT:** To block users without the required authority, the controller class must also be annotated with `@Secured(['ROLE_CAN_EDIT_BOOKS'])`.
-
+ 
 Available options:
 
 | Name | Type | Default | Description |
@@ -86,11 +90,11 @@ Registers a feature in the _User Menu_. It accepts the same options as [register
 class BootStrap {
 
     ServletContext servletContext
-    ApplicationService applicationService
+    GooweeApplication gooweeApplication
 
     def init = {
 
-        applicationService.onInit {
+        gooweeApplication.onInit {
             registerUserFeature(
                     controller: 'manual',
                     icon: 'fa-book',
@@ -112,11 +116,11 @@ Registers a string template used to render an instance of a specific class. A pr
 class BootStrap {
 
     ServletContext servletContext
-    ApplicationService applicationService
+    GooweeApplication gooweeApplication
 
     def init = {
 
-        applicationService.onInit {
+        gooweeApplication.onInit {
             registerPrettyPrinter(TProject, '${it.name}') //<1>
             registerPrettyPrinter('PROJECT_ID', '${it.padLeft(4, "0")}') // <2>
         }
@@ -172,12 +176,12 @@ Registers a callback used to render an instance of a specific class. To use a tr
 class BootStrap {
 
     ServletContext servletContext
-    ApplicationService applicationService
+    GooweeApplication gooweeApplication
     SecurityService securityService
 
     def init = {
 
-        applicationService.onInit {
+        gooweeApplication.onInit {
             registerTransformer('USER_FULLNAME') { Object value ->
                 return securityService.getUserByUsername(value).fullname
             }
@@ -197,12 +201,12 @@ Registers a role and the people who held that role during project development. W
 class BootStrap {
 
     ServletContext servletContext
-    ApplicationService applicationService
+    GooweeApplication gooweeApplication
 
     def init = {
 
-        applicationService.onInit {
-            registerCredits('Application Development', 'Francesco Piceghello', 'Gianluca Sartori')
+        gooweeApplication.onInit {
+            registerCredits('Application Development', 'Mario Rossi', 'Giuseppe Verdi')
         }
 
     }

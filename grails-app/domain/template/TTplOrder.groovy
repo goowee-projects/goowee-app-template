@@ -27,7 +27,10 @@ class TTplOrder implements GormEntity, MultiTenant<TTplOrder> {
     ]
 
     static constraints = {
-        total nullable: true
+        supplier nullable: false
+        client nullable: false
+        ref nullable: false
+        subject nullable: false
     }
 
 }

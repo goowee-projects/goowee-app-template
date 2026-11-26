@@ -5,7 +5,7 @@ import org.grails.datastore.gorm.GormEntity
 
 import java.time.LocalDateTime
 
-class TCompany implements GormEntity, MultiTenant<TCompany> {
+class TDomainClassName implements GormEntity, MultiTenant<TDomainClassName> {
 
     Long id
     LocalDateTime dateCreated
@@ -14,7 +14,9 @@ class TCompany implements GormEntity, MultiTenant<TCompany> {
     String usernameUpdated
 
     String name
-    String vat
-    String address
+
+    static constraints = {
+        name nullable: false
+    }
 
 }

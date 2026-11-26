@@ -1,4 +1,4 @@
-package gooweeapp
+package momentum
 
 import grails.boot.GrailsApp
 import grails.boot.config.GrailsAutoConfiguration
@@ -8,8 +8,8 @@ import org.apache.catalina.Context
 import org.apache.catalina.connector.Connector
 import org.apache.tomcat.util.descriptor.web.SecurityCollection
 import org.apache.tomcat.util.descriptor.web.SecurityConstraint
-import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory
-import org.springframework.boot.web.servlet.server.ServletWebServerFactory
+import org.springframework.boot.tomcat.servlet.TomcatServletWebServerFactory
+import org.springframework.boot.web.server.servlet.ServletWebServerFactory
 import org.springframework.context.annotation.Bean
 
 @CompileStatic
@@ -48,7 +48,7 @@ class Application extends GrailsAutoConfiguration {
             }
         }
 
-        tomcat.addAdditionalTomcatConnectors(connector)
+        tomcat.addAdditionalConnectors(connector)
         return tomcat
     }
 }

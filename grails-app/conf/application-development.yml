@@ -1,0 +1,24 @@
+spring.devtools.livereload.enabled: true
+
+# CREATE DEV CERTIFICATE
+#
+# NOTE: When asked for password just type "password"
+#
+# cd ${project-dir}/src/main/resources/certificates
+# openssl req -x509 -newkey rsa:4096 -keyout dev-key.pem -out dev-cert.pem -days 3650 -subj '/CN=localhost'
+# openssl pkcs12 -export -in dev-cert.pem -inkey dev-key.pem -out dev-keystore.p12 -name tomcat -caname root
+#
+# IMPORTANT: You must give "always trust" permissions to the certificate "certificates/dev-cert.pem" in your
+# operating system specific Keychain tool
+#
+server:
+  port: 8086
+#  port-http: 8080
+#  servlet:
+#    context-path: /
+#    ssl:
+#      enabled: true
+#      key-store-type: PKCS12
+#      key-store: classpath:certificates/dev-keystore.p12
+#      key-store-password: password
+#      key-alias: tomcat

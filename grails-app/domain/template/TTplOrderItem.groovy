@@ -29,7 +29,9 @@ class TTplOrderItem implements GormEntity, MultiTenant<TTplOrderItem> {
     ]
 
     static constraints = {
-        price nullable: true
+        product nullable: false
+        unitPrice nullable: false
+        quantity nullable: false
     }
 
 }

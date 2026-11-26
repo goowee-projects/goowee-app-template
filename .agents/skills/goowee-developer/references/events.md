@@ -125,11 +125,11 @@ To complete the example, register a pretty printer for book records and configur
 class BootStrap {
 
     ServletContext servletContext
-    ApplicationService applicationService
+    GooweeApplication gooweeApplication
 
     def init = {
 
-        applicationService.onInit {
+        gooweeApplication.onInit {
             registerPrettyPrinter('BOOK', '${it.title} - ${it.author}') // <1>
         }
 

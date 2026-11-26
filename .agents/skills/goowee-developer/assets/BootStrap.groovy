@@ -1,13 +1,20 @@
+package template
+
+import goowee.application.GooweeApplication
+
 class BootStrap {
 
-    ApplicationService applicationService
+    GooweeApplication gooweeApplication
+    TenantInstallService tenantInstallService
 
     def init = {
-
-        applicationService.onInit {
-
+        gooweeApplication.onTenantInstall { Stirng tenantId ->
+            tenantInstallService.install()
         }
 
+        gooweeApplication.onInit {
+            // Register features, prettyPrinters, credits
+        }
     }
 
 }

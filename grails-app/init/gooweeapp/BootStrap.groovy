@@ -1,73 +1,72 @@
 package gooweeapp
 
-import goowee.core.ApplicationService
+import goowee.application.GooweeApplication
 import goowee.security.SecurityService
 import grails.web.servlet.mvc.GrailsHttpSession
-import jakarta.servlet.ServletContext
+import template.InstallService
 import template.TTplCompany
 import template.TTplProduct
 
 class BootStrap {
 
-    ServletContext servletContext
-    ApplicationService applicationService
+    GooweeApplication gooweeApplication
     SecurityService securityService
     InstallService installService
 
     def init = {
 
-        applicationService.onInstall {
+        gooweeApplication.onInstall {
             installService.install()
         }
 
-        applicationService.onTenantInstall { String tenantId ->
+        gooweeApplication.onTenantInstall { String tenantId ->
             installService.tenantInstall()
         }
 
-        applicationService.onDevInstall { String tenantId ->
+        gooweeApplication.onDevInstall { String tenantId ->
             installService.devInstall()
         }
 
-        applicationService.beforeInit {
+        gooweeApplication.beforeInit {
             // no-op
         }
 
-        applicationService.onInit {
-            applicationService.registerPrettyPrinter(TTplCompany, '${it.name}')
-            applicationService.registerPrettyPrinter(TTplProduct, '${it.ref} - ${it.name}')
+        gooweeApplication.onInit {
+            gooweeApplication.registerPrettyPrinter(TTplCompany, '${it.name}')
+            gooweeApplication.registerPrettyPrinter(TTplProduct, '${it.ref} - ${it.name}')
 
-            applicationService.registerCredits('Project Management', 'Gianluca Sartori')
-            applicationService.registerCredits('Software Development', 'Francesco Piceghello', 'Gianluca Sartori')
-            applicationService.registerCredits('Testing', 'Francesco Piceghello', 'Gianluca Sartori')
+            gooweeApplication.registerCredits('Project Management', 'Gianluca Sartori')
+            gooweeApplication.registerCredits('Software Development', 'Francesco Piceghello', 'Gianluca Sartori')
+            gooweeApplication.registerCredits('Testing', 'Francesco Piceghello', 'Gianluca Sartori')
 
             // Main application features
-            applicationService.registerFeature(
+            gooweeApplication.registerFeature(
                 controller: 'tplOrder',
                 icon: 'fa-flag',
                 favourite: true,
             )
 
             // Template features as an example
-            applicationService.registerFeature(
+            gooweeApplication.registerFeature(
                 controller: 'tplTemplate',
             )
-            applicationService.registerFeature(
+            gooweeApplication.registerFeature(
                 parent: 'tplTemplate',
                 controller: 'tplCompany',
                 icon: 'fa-house-flag',
             )
-            applicationService.registerFeature(
+            gooweeApplication.registerFeature(
                 parent: 'tplTemplate',
                 controller: 'tplProduct',
                 icon: 'fa-heart',
             )
         }
 
-        applicationService.onTenantInit {
+        gooweeApplication.onTenantInit {
             // no-op
         }
 
-        applicationService.afterInit { String tenantId ->
+        gooweeApplication.afterInit { String tenantId ->
             // no-op
         }
 
