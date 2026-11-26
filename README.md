@@ -2,17 +2,17 @@
 
 # Goowee Application Template
 
-With [Goowee](https://goowee.org) we build Enterprise Applications with AI and [Apache Groovy](https://groovy-lang.org).
+With [Goowee](https://goowee.org), you can build enterprise applications with AI and [Apache Groovy](https://groovy-lang.org).
 
 ## Getting started
-Make sure you have [Git](https://git-scm.com) and a [JDK](https://www.oracle.com/java/technologies/downloads/) installed. The minimum requirement is Java 21.
+Make sure you have [Git](https://git-scm.com) and a [JDK](https://www.oracle.com/java/technologies/downloads/) installed. Java 21 or later is required.
 ```
 $ git clone https://github.com/goowee-projects/goowee-app-template
 $ cd goowee-app-template
 $ ./gradlew bootRun
 ```
 
-> The first run may take a while, as all required dependencies will be downloaded.
+> The first run may take a few minutes while Gradle downloads the required dependencies.
 
 You should see something like this:
 
@@ -30,42 +30,41 @@ You should see something like this:
 Grails application running at http://localhost:8080 in environment: development
 ```
 
-Open your browser at [https://localhost:8080](https://localhost:8080) then:
-- Login with `super`/`super` to manage the whole application
-- Login with `admin`/`admin` to manage the `DEFAULT` tenant
+Open [http://localhost:8080](http://localhost:8080) in your browser, then:
+- Log in as `super`/`super` to manage the entire application.
+- Log in as `admin`/`admin` to manage the `DEFAULT` tenant.
 
 ![Goowee Application Login Screen](./README.png)
 
 ## New application
-You can create a new application from this template project with an AI agent or manually.
+You can use this template to create a new application with an AI agent or manually.
 
 ### AI agent
-With an AI agent execute the following prompts:
+Ask an AI agent to run these prompts:
 
 1. `Rename the application and the corresponding packages to "myapp".`
 2. `Create a Goowee app to manage a “person” with the following columns: firstname, lastname, age, gender.`
 
 ### Manually
-1. Find and replace the string `gooweeapp` across all project files with your chosen name
-2. Rename the `gooweeapp` package accordingly
-3. You can find an implementation example in the `template` package
+1. Find and replace `gooweeapp` with your chosen application name in all project files.
+2. Rename the `gooweeapp` package to match your application name.
+3. See the `template` package for an implementation example.
 
-## Create the executable `.jar`
+## Build the executable JAR
 1. Run `./gradlew bootJar`
-2. The application `.jar` file will be generated under `/biuld/libs`
-3. Run the application with `java -jar gooweeapp-1.0-SNAPSHOT.jar`
+2. The application JAR will be generated in `build/libs`.
+3. Run the application with `java -jar gooweeapp-1.0-SNAPSHOT.jar`.
 
 ## Project documentation
-Documentation sources are under `/src/docs`.
-1. Write the content using [Asciidoc](https://asciidoctor.org/docs/asciidoc-syntax-quick-reference/)
-2. Generate the documentation with `./gradlew asciidoctor`
-3. The generated HTML files will be available in the `/docs` directory.
+The documentation source files are in `src/docs`.
+1. Write the content in [AsciiDoc](https://asciidoctor.org/docs/asciidoc-syntax-quick-reference/).
+2. Generate the documentation by running `./gradlew asciidoctor`.
+3. The generated HTML files will be available in the `docs` directory.
 
-Edit this README:
-- Write the content using [Markdown](https://www.markdownguide.org/cheat-sheet/)
+To edit this README, write the content in [Markdown](https://www.markdownguide.org/cheat-sheet/).
 
 ## Learn more
 - Documentation: https://goowee.org/docs
 
 ## License
-Goowee is Open Source software released under the [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.html).
+Goowee is open-source software released under the [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.html).
