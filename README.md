@@ -1,6 +1,6 @@
 [![Goowee on X](https://img.shields.io/twitter/follow/gooweeframework?style=social)](https://x.com/gooweeframework)
 
-# Goowee pplication Template
+# Goowee Application Template
 
 With [Goowee](https://goowee.org) you can build Back-Office Web Applications with a single programming language: [Apache Groovy](https://groovy-lang.org).
 
